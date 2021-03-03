@@ -1,0 +1,64 @@
+* {
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.content {
+  width: 100%;
+  padding: 20px;
+  border: 1px solid black;
+  border-radius: 8px;
+}
+
+.content-title {
+  font-size: 2rem;
+}
+
+.items {
+  margin-top: 10px;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.item:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.item-name {
+  width: 50%;
+}
+
+.item-link,
+.item-size {
+  width: 20%;
+  text-align: right;
+}
+
+.downloaded {
+  margin-top: 10px;
+}
