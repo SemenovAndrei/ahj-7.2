@@ -20,7 +20,7 @@ export default class Content {
    */
   getMarkup() {
     this.content.innerHTML = `
-    <h2 class="content-title">Available Files (without sms and registration)</h2>
+    <button class="btn btn-add">Добавить Тикет</button>
     <div class="items">
     </div>
     `;

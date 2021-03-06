@@ -1,12 +1,20 @@
+import FormAdd from './Forms/FormAdd';
+import Item from './Item';
+import Content from './Content';
+
+// const formAdd = new FormAdd();
+// const content = new Content();
+// const item = new Item();
+
 /* eslint-disable prefer-destructuring */
 /**
  * @class Elements
  */
 export default class Elements {
-  constructor(content, item, data) {
-    this.content = content.getContent();
-    this.item = item;
-    this.data = data;
+  constructor() {
+    this.item = new Item();
+    this.content = new Content().getContent();
+    this.formAdd = new FormAdd().getContent();
     this.body = document.getElementsByTagName('body')[0];
   }
 
@@ -24,7 +32,8 @@ export default class Elements {
    */
   addElements() {
     this.addContainer();
-    this.addItem();
+    this.addFormWrapper();
+    // this.addItem();
   }
 
   /**
@@ -33,16 +42,46 @@ export default class Elements {
   addContainer() {
     this.container = document.createElement('div');
     this.container.classList.add('container');
-    this.container.innerHTML = `
-    <div class="downloaded"></div>
-    `;
   }
 
-  addItem() {
-    // eslint-disable-next-line no-restricted-syntax
-    for (const [, value] of Object.entries(this.data)) {
-      const result = this.item.getItem(value);
-      this.content.querySelector('.items').appendChild(result);
-    }
+  addFormWrapper() {
+    this.formWrapper = document.createElement('div');
+    this.formWrapper.classList.add('form-wrapper');
+  }
+
+  showModalAdd() {
+    this.body.insertAdjacentElement('afterbegin', this.formWrapper);
+
+    this.formWrapper.classList.add('form-active');
+    this.formWrapper.appendChild(this.formAdd);
+
+    const form = document.forms[0];
+    const fields = form.querySelectorAll('[id^=field-');
+
+    [...fields].forEach((field) => {
+      field.classList.remove('field-invalid');
+    });
+    this.formAdd.querySelector('.field-name').focus();
+  }
+
+  hideModal() {
+    this.formWrapper.classList.remove('form-active');
+    this.formWrapper.innerHTML = '';
+    this.body.removeChild(this.formWrapper);
+  }
+
+  resetTickets() {
+    const items = this.content.querySelector('.items');
+    items.innerHTML = '';
+  }
+
+  addItem(ticket) {
+    const items = this.content.querySelector('.items');
+    items.appendChild(this.item.getItem(ticket));
+  }
+
+  resetItemDescription() {
+    const descriptions = this.content.getElementsByClassName('item-description');
+    [...descriptions].forEach((e) => e.classList.remove('description-active'));
   }
 }

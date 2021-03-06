@@ -1,16 +1,7 @@
-import Data from './Data';
-import Item from './Item';
-import Content from './Content';
 import Elements from './Elements';
-import DownloadManager from './DownloadManager';
+import Tickets from './Tickets';
 
-const content = new Content();
+const elements = new Elements();
 
-const item = new Item();
-
-const data = new Data();
-
-const elements = new Elements(content, item, data);
-
-const downloadManager = new DownloadManager(elements);
-downloadManager.init();
+const tickets = new Tickets(elements);
+tickets.init();

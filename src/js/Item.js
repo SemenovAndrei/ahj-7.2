@@ -9,39 +9,42 @@ export default class Item {
   /**
    * Add this.item
    *
-   * @param {file} file
+   * @param {ticket} ticket
    */
-  addItem(file) {
+  addItem(ticket) {
     this.item = document.createElement('div');
+    this.item.dataset.id = ticket.id;
     this.item.classList.add('item');
-    this.getMarkup(file);
+    this.getMarkup(ticket);
   }
 
   /**
    * Add marker to this.item
    *
-  * @param {file} file
+   * @param {ticket} ticket
    */
-  getMarkup(file) {
-    const size = file.url.split(',')[1];
-    const sizeInMb = (window.atob(size).length / 1024 / 1024).toFixed(2);
-
+  getMarkup(ticket) {
     this.item.innerHTML = `
-      <div class="item-name">${file.name}</div>
-      <div class="item-size">${sizeInMb} Mb</div>
-      <div class="item-link" data-name="${file.name}">
-      <a class='link' href="${file.url}" download="${file.name}" rel="noopener" data-size="${sizeInMb}">Download</a>
+    <div class="item-inner">
+      <input class="item-status" type="checkbox"></input>
+      <div class="item-name">${ticket.name}</div>
+      <div class="item-date" data-name="${ticket.name}">
+      ${new Date(ticket.created).toLocaleDateString()}
       </div>
-      `;
+      <button class="btn btn-item btn-edit">✎</button>
+      <button class="btn btn-item btn-delete">✘</button>
+    </div>
+    <div class="item-description"></div>
+    `;
   }
 
   /**
-   * @param {file} file
+   * @param {ticket} ticket
    *
    * @return this.item
    */
-  getItem(file) {
-    this.addItem(file);
+  getItem(ticket) {
+    this.addItem(ticket);
 
     return this.item;
   }
