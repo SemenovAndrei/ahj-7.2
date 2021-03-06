@@ -1,7 +1,7 @@
 import FormAdd from './FormAdd';
 
 /**
- * @class Content
+ * @class FormEdit
  */
 export default class FormEdit extends FormAdd {
   constructor() {

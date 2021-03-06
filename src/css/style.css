@@ -38,7 +38,8 @@ input {
 }
 
 .form-add,
-.form-edit {
+.form-edit,
+.form-delete {
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -67,6 +68,7 @@ input {
 
 .form-title {
   text-align: center;
+  margin-bottom: 10px;
 }
 
 .form-controls {
@@ -176,3 +178,23 @@ input {
   font-size: 1.5rem;
 }
 
+.item-status {
+  display: none;
+}
+
+.checkbox-mark {
+  margin-top: 0;
+}
+
+.item-status + .checkbox-mark::before {
+  content: '☐';
+  width: 20px;
+  height: 20px;
+  display: block;
+  font-size: 2rem;
+
+}
+
+.item-status:checked + .checkbox-mark::before {
+  content: '☑';
+}

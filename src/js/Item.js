@@ -26,7 +26,11 @@ export default class Item {
   getMarkup(ticket) {
     this.item.innerHTML = `
     <div class="item-inner">
-      <input class="item-status" type="checkbox"></input>
+      <input 
+      class="item-status" 
+      type="checkbox" 
+      id="item-status-${ticket.id}" />
+      <label class="checkbox-mark" for="item-status-${ticket.id}"></label>
       <div class="item-name">${ticket.name}</div>
       <div class="item-date" data-name="${ticket.name}">
       ${new Date(ticket.created).toLocaleDateString()}

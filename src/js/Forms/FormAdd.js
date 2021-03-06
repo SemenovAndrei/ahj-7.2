@@ -1,5 +1,5 @@
 /**
- * @class Content
+ * @class FormAdd
  */
 export default class FormAdd {
   constructor() {

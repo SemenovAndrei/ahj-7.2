@@ -1,7 +1,7 @@
 import FormAdd from './FormAdd';
 
 /**
- * @class Content
+ * @class FormDelete
  */
 export default class FormDelete extends FormAdd {
   constructor() {
@@ -16,6 +16,7 @@ export default class FormDelete extends FormAdd {
     this.content.innerHTML = `
     <h3 class="form-title">Удалить Тикет</h3>
     <div class="form-alarm">Вы уверены что хотите удалить тикет? Это действие необратимо.</div>
+    <input class="field-delete" id="field-delete" name="delete" type="hidden">
     <div class="form-controls">
       <button type="reset" class="btn btn-cancel">Отмена</button>
       <button class="btn btn-confirm">Ok</button>

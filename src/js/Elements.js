@@ -1,14 +1,11 @@
+/* eslint-disable prefer-destructuring */
+
 import FormAdd from './Forms/FormAdd';
 import FormEdit from './Forms/FormEdit';
 import FormDelete from './Forms/FormDelete';
 import Item from './Item';
 import Content from './Content';
 
-// const formAdd = new FormAdd();
-// const content = new Content();
-// const item = new Item();
-
-/* eslint-disable prefer-destructuring */
 /**
  * @class Elements
  */
@@ -48,11 +45,17 @@ export default class Elements {
     this.container.classList.add('container');
   }
 
+  /**
+   * Add form wrapper for background
+   */
   addFormWrapper() {
     this.formWrapper = document.createElement('div');
     this.formWrapper.classList.add('form-wrapper');
   }
 
+  /**
+   * Show formAdd
+   */
   showModalAdd() {
     this.body.insertAdjacentElement('afterbegin', this.formWrapper);
 
@@ -68,27 +71,46 @@ export default class Elements {
     this.formAdd.querySelector('.field-name').focus();
   }
 
+  /**
+   * Hide all forms
+   */
   hideModal() {
     this.formWrapper.classList.remove('form-active');
     this.formWrapper.innerHTML = '';
     this.body.removeChild(this.formWrapper);
   }
 
+  /**
+   * Reset items - container for ticket
+   */
   resetTickets() {
     const items = this.content.querySelector('.items');
     items.innerHTML = '';
   }
 
+  /**
+   * Add ticket to page
+   *
+   * @param {object} ticket - ticket
+   */
   addItem(ticket) {
     const items = this.content.querySelector('.items');
     items.appendChild(this.item.getItem(ticket));
   }
 
+  /**
+   * Close all open descriptions
+   */
   resetItemDescription() {
     const descriptions = this.content.getElementsByClassName('item-description');
     [...descriptions].forEach((e) => e.classList.remove('description-active'));
   }
 
+  /**
+   * Show formEdit
+   *
+   * @param {object} ticket - ticket
+   */
   showModalEdit(ticket) {
     this.body.insertAdjacentElement('afterbegin', this.formWrapper);
 
@@ -106,10 +128,16 @@ export default class Elements {
     form.querySelector('.field-description').value = ticket.description;
   }
 
-  showModalDelete() {
+  /**
+   * Show formDelete
+   *
+   * @param {number} id - ticket id
+   */
+  showModalDelete(id) {
     this.body.insertAdjacentElement('afterbegin', this.formWrapper);
 
     this.formWrapper.classList.add('form-active');
     this.formWrapper.appendChild(this.formDelete);
+    this.formDelete.querySelector('.field-delete').value = id;
   }
 }
