@@ -55,6 +55,10 @@ export default class Tickets {
       this.elements.showModalAdd();
     }
 
+    if (event.target.classList.contains('btn-delete')) {
+      this.deleteTicket(event.target.closest('.item').dataset.id);
+    }
+
     if (event.target.classList.contains('item-name')) {
       this.showFullTicket(event.target.closest('.item'));
     }
@@ -136,5 +140,12 @@ export default class Tickets {
       return false;
     }
     return true;
+  }
+
+  async deleteTicket(id) {
+    const response = await fetch(`${this.url}/${id}`, { method: 'DELETE' });
+    if (response.status === 204) {
+      this.loadTickets();
+    }
   }
 }
