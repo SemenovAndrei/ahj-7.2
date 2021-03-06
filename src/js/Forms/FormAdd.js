@@ -5,6 +5,7 @@ export default class FormAdd {
   constructor() {
     this.content = null;
     this.className = 'form-add';
+    this.title = 'Добавить Тикет';
   }
 
   /**
@@ -21,7 +22,7 @@ export default class FormAdd {
    */
   getMarkup() {
     this.content.innerHTML = `
-    <h3 class="form-title">Добавить Тикет</h3>
+    <h3 class="form-title">${this.title}</h3>
     <label for="field-name">Краткое Описание</label>
     <input class="field-name" id="field-name" name="name">
     <label for="field-description">Подробное Описание</label>

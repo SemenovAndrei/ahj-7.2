@@ -6,7 +6,7 @@ export default class Tickets {
     this.elements = elements;
     this.tickets = [];
     this.editCurrent = null;
-    this.url = 'http://localhost:7777/tickets';
+    this.url = 'https://ahj-7-1.herokuapp.com/tickets';
   }
 
   /**
@@ -92,7 +92,7 @@ export default class Tickets {
       return;
     }
 
-    if (event.target.classList.contains('item-name')) {
+    if (/name|date/i.test(event.target.className)) {
       this.showFullTicket(event.target.closest('.item'));
     }
   }
@@ -248,8 +248,6 @@ export default class Tickets {
   }
 
   async updateStatus() {
-    console.log(this.editCurrent);
-
     const response = await fetch(`${this.url}/${this.editCurrent[0].id}`, {
       method: 'PUT',
       body: JSON.stringify({
