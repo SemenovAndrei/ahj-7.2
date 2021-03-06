@@ -5,6 +5,7 @@ export default class Tickets {
   constructor(elements) {
     this.elements = elements;
     this.tickets = [];
+    this.editCurrent = null;
     this.url = 'http://localhost:7777/tickets';
   }
 
@@ -32,14 +33,16 @@ export default class Tickets {
     }
 
     if (event.target.classList.contains('btn-cancel')) {
-      console.log(123);
       this.elements.hideModal();
     }
 
     if (event.target.classList.contains('btn-confirm')) {
       event.preventDefault();
 
-      this.addTicket();
+      // eslint-disable-next-line no-unused-expressions
+      event.target.closest('.form-add')
+        ? this.addTicket()
+        : this.editTicket(this.editCurrent.id);
     }
   }
 
@@ -53,6 +56,10 @@ export default class Tickets {
 
     if (event.target.classList.contains('btn-add')) {
       this.elements.showModalAdd();
+    }
+
+    if (event.target.classList.contains('btn-edit')) {
+      this.showFullTicket(event.target.closest('.item'), 'edit');
     }
 
     if (event.target.classList.contains('btn-delete')) {
@@ -94,6 +101,31 @@ export default class Tickets {
     }
   }
 
+  async editTicket() {
+    // const form = new FormData(document.forms[0]);
+
+    const form = document.forms[0];
+
+    if (Tickets.checkEmptyField()) {
+      return;
+    }
+
+    const response = await fetch(`${this.url}/${this.editCurrent.id}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        name: form.querySelector('.field-name').value,
+        description: form.querySelector('.field-description').value,
+      }),
+    });
+
+    if (response.status === 204) {
+      form.querySelector('.field-name').value = '';
+      form.querySelector('.field-description').value = '';
+      this.elements.hideModal();
+      this.loadTickets();
+    }
+  }
+
   async loadTickets() {
     const response = await fetch(`${this.url}?method=allTickets`, { method: 'GET' });
     if (response.status === 200 && response.statusText === 'OK') {
@@ -104,14 +136,21 @@ export default class Tickets {
     }
   }
 
-  async showFullTicket(ticket) {
+  async showFullTicket(ticket, edit = false) {
     const response = await fetch(
       `${this.url}?method=ticketById&id=${ticket.dataset.id}`,
       { method: 'GET' },
     );
     if (response.status === 200 && response.statusText === 'OK') {
-      this.elements.resetItemDescription();
       const resJson = await response.json();
+
+      if (edit) {
+        this.editCurrent = resJson;
+        this.elements.showModalEdit(this.editCurrent);
+        return;
+      }
+
+      this.elements.resetItemDescription();
       const description = ticket.querySelector('.item-description');
       description.classList.add('description-active');
       description.innerText = resJson.description;
