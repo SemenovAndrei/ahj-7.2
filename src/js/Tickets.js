@@ -65,10 +65,13 @@ export default class Tickets {
    */
   logicContentClick(event) {
     if (event.target.classList.contains('checkbox-mark')) {
-      const checkbox = event.target.closest('.item').querySelector('.item-status');
-      console.log(event.target);
-      console.log(checkbox);
+      const parent = event.target.closest('.item');
+      const checkbox = parent.querySelector('.item-status');
       checkbox.checked = !checkbox.checked;
+
+      this.editCurrent = this.tickets.filter((el) => el.id === Number(parent.dataset.id));
+      this.editCurrent[0].status = checkbox.checked;
+      this.updateStatus();
       return;
     }
 
@@ -236,9 +239,25 @@ export default class Tickets {
       `${this.url}/${form.querySelector('.field-delete').value}`,
       { method: 'DELETE' },
     );
+
     if (response.status === 204) {
       this.elements.hideModal();
 
+      this.loadTickets();
+    }
+  }
+
+  async updateStatus() {
+    console.log(this.editCurrent);
+
+    const response = await fetch(`${this.url}/${this.editCurrent[0].id}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        status: this.editCurrent[0].status,
+      }),
+    });
+
+    if (response.status === 204) {
       this.loadTickets();
     }
   }

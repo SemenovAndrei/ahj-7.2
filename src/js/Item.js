@@ -24,12 +24,13 @@ export default class Item {
    * @param {ticket} ticket
    */
   getMarkup(ticket) {
+    const checked = ticket.status === true ? 'checked' : '';
     this.item.innerHTML = `
     <div class="item-inner">
       <input 
       class="item-status" 
       type="checkbox" 
-      id="item-status-${ticket.id}" />
+      id="item-status-${ticket.id}" ${checked}/>
       <label class="checkbox-mark" for="item-status-${ticket.id}"></label>
       <div class="item-name">${ticket.name}</div>
       <div class="item-date" data-name="${ticket.name}">
